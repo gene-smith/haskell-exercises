@@ -8,18 +8,16 @@ add x y = x + y
 
 -- Check for odd and even number
 checkNumber :: Int -> String
-checkNumber y =
-    if (mod y 2) == 0
-        then "even"
-        else "odd"
+checkNumber y
+    | mod y 2 == 0 = "even"
+    | otherwise = "odd"
 
 
 -- Add numbers within a list
 sumOfList :: Int -> [Int] -> Int
-sumOfList total lst =
-    if (lst == [])
-        then total
-        else sumOfList (total + (head lst)) (tail lst)
+sumOfList total lst
+    | lst == [] = total
+    | otherwise sumOfList (total + (head lst)) (tail lst)
 
 
 -- Add number within a list, better version
@@ -56,3 +54,35 @@ toUppercase processedString remainingString =
     if (remainingString == [])
         then processedString
         else toUppercase (processedString ++ [toUpper (head remainingString)]) (tail remainingString)
+
+
+-- Checking to see if characters in string are in another string
+
+isCharPresent :: Char -> [Char] -> Bool
+isCharPresent needle remainingString
+  | (remainingString == []) = False
+  | (needle == (head remainingString)) = True
+  | otherwise = isCharPresent needle (tail remainingString)
+
+allCharsPresent :: [Char] -> [Char] -> Bool
+allCharsPresent remainingNeedles haystack
+  | (remainingNeedles == []) = True
+  | isCharPresent (head remainingNeedles) haystack = allCharsPresent (tail remainingNeedles) haystack
+  | otherwise = False
+
+
+-- create a list of even numbers to N
+evenList :: Int -> [Int] -> [Int]
+evenList n lst
+  | n==0 = lst
+  | mod n 2 == 0 = evenList (n - 1) (n:lst)
+  | otherwise = evenList (n - 1) lst
+
+
+-- check for leap year
+leapYearCheck :: Int -> Bool
+leapYearCheck year
+    | mod year 400 == 0 = True
+    | mod year 100 == 0 = False
+    | mod year 4 == 0 = True
+    | otherwise = False
